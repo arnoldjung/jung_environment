@@ -1,0 +1,116 @@
+
+" == Configuration Options =========================
+
+"   Load any local-specific settings.
+if filereadable(expand("~/.vimrc.local"))
+  so ~/.vimrc.local
+endif
+
+set backupdir=/home/arnold/.vimbak
+set dir=/home/arnold/.vimbak
+
+" == Visual Options ================================
+
+" - set visual bell -
+"set novb
+set vb
+
+set nowrap
+
+set guifont=Courier\ 10\ Pitch
+
+colorscheme darkblue
+"colorscheme ron
+"colorscheme oceandeep
+"colorscheme moria
+"colorscheme northsky
+"colorscheme desert
+"colorscheme pablo
+
+" for prettier indentions
+set showbreak=\ \ \ \ \ \ \|\
+
+"   highlight search
+set hlsearch
+
+" == Functional Options ==========================
+"   Remember the last 100 ":" commands
+set history=100
+
+" No highlight macro
+:map ,c :nohls
+:map ,d :cd %:h
+
+:map <C-k> :bp<cr>
+:map <C-j> :bn<cr>
+
+"   Allow switching of buffers without saving
+set hidden
+
+" <Tab> actually inserts spaces, but behaves like <Tab>. Set
+" softtabstop to match shiftwidth to be consistent
+" (See! No reason to change tabstop to something else besides 8).
+set softtabstop=2 expandtab
+
+"   Status line display to separate windows
+set statusline=%-28f%(\ [%W%H%R%M%Y]%)\ --\ L%l,C%c%V\ --\ %p%%
+set ls=2
+
+" set cursor to last known line in file
+au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") |exe "normal g'\"" | endif
+
+" ai       = Auto-indent,
+" redraw   = Redraw (ignored by Vim),
+" sm       = Show brace matches,
+" ic       = Ignore case in searches,
+" ts=      =Tab stop to 8 (THIS SHOULD ALWAYS BE THE CASE!)
+" sw=      = Shift-width to 2 (prefered default indenting level)
+" nonumber = Do not show line numbers
+:set ai redraw sm ic scs ts=8 sw=2 nonumber
+
+:set autoread
+:set linebreak
+
+" folding
+:map <F5> v%zf
+:set foldmethod=marker foldmarker={{{,}}}
+
+" Use Vim defaults and not plain 'ol vi
+set nocompatible
+
+" Allow backspacing anywhere
+set backspace=indent,eol,start
+
+" Show editting mode in status bar (some Vi implementations support this)
+set showmode
+
+" Only indent shiftwidth for <TAB> at line beginnings
+" (See! No reason to change tabstop to something else besides 8).
+set smarttab
+
+" Provide list of matches in completion mode if ambiguous
+set wildmode=longest,list,full
+
+" When selecting possible matches, highlight match
+set wildmenu
+
+"" When started with a file name and line number separated by a colon, open the
+"" file and jump to the line number.
+au BufNewFile *:* nested call FileWithLineNumber()
+func! FileWithLineNumber()
+  let file = expand('%')
+  if strpart(file, strlen(file) - 1) == ':'
+  let file = strpart(file, 0, strlen(file) - 1)
+  endif
+  let i = strridx(file, ':')
+  let base = strpart(file, 0, i)
+  let num = strpart(file, i+1)
+  echo 'base:' . base
+  echo 'num:' . num
+  if match(num, '[0-9]\+') != -1 && filereadable(base)
+  echo 'match!'
+  exec 'e ' . escape(base, ' +')
+  exec num
+  endif
+endfunc
+
