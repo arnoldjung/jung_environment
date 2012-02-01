@@ -9,3 +9,5 @@ JUNG_ENV=`pwd`
 ln -s $JUNG_ENV/bashrc ~/.bashrc
 ln -s $JUNG_ENV/vimrc  ~/.vimrc
 
+mkdir ~/.vimbak
+
