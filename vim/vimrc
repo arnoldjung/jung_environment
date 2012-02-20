@@ -9,6 +9,12 @@ endif
 set backupdir=/home/arnold/.vimbak
 set dir=/home/arnold/.vimbak
 
+"   Remember the last 100 ":" commands
+set history=100
+
+set splitbelow
+set splitright
+
 " == Visual Options ================================
 
 " - set visual bell -
@@ -34,12 +40,13 @@ set showbreak=\ \ \ \ \ \ \|\
 set hlsearch
 
 " == Functional Options ==========================
-"   Remember the last 100 ":" commands
-set history=100
+map H ^
+map L $
+inoremap kj <Esc>
 
 " No highlight macro
-:map ,c :nohls
-:map ,d :cd %:h
+:map ,c :nohls<cr>
+:map ,d :cd %:h<cr>
 
 :map <C-k> :bp<cr>
 :map <C-j> :bn<cr>
@@ -72,7 +79,7 @@ au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") |exe "normal g'\
 :set linebreak
 
 " folding
-:map <F5> v%zf
+:map <F5> v%zf<cr>
 :set foldmethod=marker foldmarker={{{,}}}
 
 " Use Vim defaults and not plain 'ol vi
@@ -113,4 +120,18 @@ func! FileWithLineNumber()
   exec num
   endif
 endfunc
+
+" move a line of text using ALT+[jk], indent with ALT+[hl]
+nnoremap <A-j> :m+<CR>==
+nnoremap <A-k> :m-2<CR>==
+nnoremap <A-h> <<
+nnoremap <A-l> >>
+inoremap <A-j> <Esc>:m+<CR>==gi
+inoremap <A-k> <Esc>:m-2<CR>==gi
+inoremap <A-h> <Esc><<`]a
+inoremap <A-l> <Esc>>>`]a
+vnoremap <A-j> :m'>+<CR>gv=gv
+vnoremap <A-k> :m-2<CR>gv=gv
+vnoremap <A-h> <gv
+vnoremap <A-l> >gv
 
