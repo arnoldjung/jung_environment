@@ -40,6 +40,8 @@ alias gitinfo='git diff HEAD..origin --name-status'
 alias gitrevdiff='git log -p -M -C --follow'
 
 #ALIASES
+alias bashrc='echo "sourcing .bashrc" && source ~/.bashrc'
+alias bashrcw='g ~/.bashrc; read -p "source .bashrc? (y/n): "; [ "$REPLY" == "y" ] && bashrc'
 alias cd-='cd -'
 alias shistory='history | tail -n50'
 alias filter='grep -v'
