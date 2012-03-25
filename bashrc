@@ -32,8 +32,6 @@
   export PAGER='less'
 # }}}
 
-# aliases {{{
-
 # system {{{
   alias bashrc='echo "sourcing .bashrc" && source ~/.bashrc'
   alias bashrcw='g ~/.bashrc; read -p "source .bashrc? (y/n): "; [ "$REPLY" == "y" ] && bashrc'
@@ -59,7 +57,7 @@
   alias less='less --force -R --ignore-case --long-prompt'
 # }}}
 
-# util {{{
+# util aliases{{{
   bak() { mv $1 $1.$(date +%F).bak; }
   alias iotop='iotop -d 3 -oa'
   alias g='gvim'
@@ -80,6 +78,12 @@
   #for comparing local disk version to repository
   alias gitdiffR='git diff origin/$(git branch | grep "^\*" | cut -c3-)'
   alias gitinfo='git diff HEAD..origin --name-status'
+
+  # git colors
+  git config --global color.branch auto
+  git config --global color.diff auto
+  git config --global color.interactive auto
+  git config --global color.status auto
 # }}}
 
 # maven {{{
@@ -88,8 +92,6 @@
   alias depTreeVerbose='mvn -Dverbose=true dependency:tree | g-'
   unittest() { mvn test -Dtest=$1 ; }
   unittestclean() { mvn clean test -Dtest=$1 ; }
-# }}}
-
 # }}}
 
 # prompt {{{
