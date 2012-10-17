@@ -100,7 +100,7 @@
   END_PROMPT_COLOR='\[\e[0m\]'
   #PS1="$SET_PROMPT_COLOR\t[\u@\h \W]\$ $END_PROMPT_COLO"
   PS1="$SET_PROMPT_COLOR[\w] \t$END_PROMPT_COLOR"
-  PS1="$PS1\n$SET_PROMPT_COLOR2[\W@\h]$ $END_PROMPT_COLOR"
+  PS1="\n$PS1\n$SET_PROMPT_COLOR2[\W@\h]$ $END_PROMPT_COLOR"
   #set color scheme
   #eval `dircolors ~/.coloursrc`
 # }}}
