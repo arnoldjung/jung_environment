@@ -5,6 +5,6 @@ bak() { mv $1 $1.$(date +%F).bak; }
 
 # vim init
 bak ~/.vimrc
-ln -s $JUNG_ENV/vimrc  ~/.vimrc
+ln -s $JUNG_ENV/vim/vimrc  ~/.vimrc
 mkdir ~/.vimbak
 
