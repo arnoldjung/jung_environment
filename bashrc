@@ -26,13 +26,16 @@
 
 # env settings{{{
   PATH=$PATH
+  PATH=$PATH:/home/arnold/tools/jdk1.7.0_45/bin
+  PATH=$PATH:/home/arnold/bin
+  JAVA_HOME=/home/arnold/tools/jdk1.7.0_45/
   
   export EDITOR='gvim -f'
   export VISUAL='gvim -f'
   export PAGER='less'
 # }}}
 
-# system {{{
+# generic aliases {{{
   alias bashrc='echo "sourcing .bashrc" && source ~/.bashrc'
   alias bashrcw='g ~/.bashrc; read -p "source .bashrc? (y/n): "; [ "$REPLY" == "y" ] && bashrc'
   alias cd-='cd -'
@@ -55,6 +58,7 @@
   alias tree='tree -C --dirsfirst'
   alias lastcol="awk '{print \$NF;}'"
   alias less='less --force -R --ignore-case --long-prompt'
+  alias src='cd ~/svn'
 # }}}
 
 # util aliases{{{
@@ -86,12 +90,28 @@
   git config --global color.status auto
 # }}}
 
+# svn {{{
+  alias svnstatus='svn status'
+  alias svns='svn status'
+  alias svndiff='svn diff | less'
+  alias svnd='svndiff'
+  alias svnrevdiff='svn log --diff'
+# }}}
+
 # maven {{{
+  export M2_HOME=/home/arnold/tools/apache-maven-3.1.1
+  export M2=$M2_HOME/bin
+  PATH=$M2:$PATH
   alias mvncheck='mvn versions:display-dependency-updates'
   alias depTree='mvn dependency:tree | g-'
   alias depTreeVerbose='mvn -Dverbose=true dependency:tree | g-'
   unittest() { mvn test -Dtest=$1 ; }
   unittestclean() { mvn clean test -Dtest=$1 ; }
+
+  alias mm='mvn install'
+  alias mmci='mvn clean install'
+
+  alias runjava='java -cp target/*-jar-with-dependencies.jar'
 # }}}
 
 # prompt {{{
