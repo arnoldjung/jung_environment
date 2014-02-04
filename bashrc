@@ -2,11 +2,24 @@
 # arnold's .bashrc
 # ================
 
+# VirtualBox
+# {{{
+# sudo mount -t vboxsf SHARED ~/SHARED/
+  VBOX_SHARED_DIR='/home/arnold/SHARED'
+  alias shared='cd $VBOX_SHARED_DIR'
+  function mvToShared() {
+    mv $@ $VBOX_SHARED_DIR
+  }
+  function cpToShared() {
+    cp $@ $VBOX_SHARED_DIR
+  }
+# }}}
+
 # notes {{{
-
-# read each line of a file, instead of tokens separated by space
-#   while read line; do echo "line: $line" ; done < someFile.txt
-
+  function show_common() {
+      echo " read each line of a file, instead of tokens separated by space"
+      echo "   while read line; do echo "line: $line" ; done < someFile.txt"
+  }
 # }}}
 
 # bash settings {{{
@@ -26,8 +39,9 @@
 
 # env settings{{{
   PATH=$PATH
-  PATH=$PATH:/home/arnold/tools/jdk1.7.0_45/bin
-  PATH=$PATH:/home/arnold/bin
+  PATH=/home/arnold/tools/jdk1.7.0_45/bin:$PATH
+  PATH=/home/arnold/tools/node-v0.10.23/:$PATH
+  PATH=/home/arnold/bin:$PATH
   JAVA_HOME=/home/arnold/tools/jdk1.7.0_45/
   
   export EDITOR='gvim -f'
@@ -35,7 +49,7 @@
   export PAGER='less'
 # }}}
 
-# generic aliases {{{
+# linux aliases {{{
   alias bashrc='echo "sourcing .bashrc" && source ~/.bashrc'
   alias bashrcw='g ~/.bashrc; read -p "source .bashrc? (y/n): "; [ "$REPLY" == "y" ] && bashrc'
   alias cd-='cd -'
@@ -58,7 +72,6 @@
   alias tree='tree -C --dirsfirst'
   alias lastcol="awk '{print \$NF;}'"
   alias less='less --force -R --ignore-case --long-prompt'
-  alias src='cd ~/svn'
 # }}}
 
 # util aliases{{{
@@ -70,11 +83,18 @@
   alias ungzip='gunzip'
   alias k-='kompare -'
   alias msg='kdialog --msgbox'
-  alias zkm='java -Xmx1g -jar /usr/local/devh/jars/ZKM.jar'
   alias wnbdeluxe='javaws http://www.fatbread.com/yawni.jnlp'
   alias treemap='gdmap'
   alias lastlog='ls -tr ~/logs | tail -n5; g ~/logs/`ls -tr ~/logs | tail -n1`'
 # }}}
+
+# git-svn commands
+  function show_gitsvn() {
+      echo "to clone  : git svn clone https://sami.cdt.int.thomsonreuters.com/svn/taml_taml/trunk/projects/SOME_PROJECT"
+      echo "(with rev): git svn clone -s -r 40000:HEAD https://sami.cdt.int.thomsonreuters.com/svn/taml_taml/trunk/projects/SOME_PROJECT"
+      echo "to update : git svn rebase"
+      echo "to commit : git svn dcommit"
+  }
 
 # git {{{
   alias gits='git status'
@@ -91,25 +111,41 @@
 # }}}
 
 # svn {{{
+  svn() {
+    if [ x"$1" = xdiff ] || [ x"$1" = xdi ]; then
+      /usr/bin/svn "$@" | less
+    elif [ x"$1" = xlog ] ; then
+      /usr/bin/svn "$@" | less
+    else
+      /usr/bin/svn "$@"
+    fi
+  }
   alias svnstatus='svn status'
   alias svns='svn status'
-  alias svndiff='svn diff | less'
-  alias svnd='svndiff'
-  alias svnrevdiff='svn log --diff'
+  alias s='svns'
+  alias sdiff='svn diff | less'
+  function svnrevdiff() {
+      svn log --diff $@ | less
+  }
+  function show_svn() {
+      echo "svn import . https://sami.cdt.int.thomsonreuters.com/svn/taml_taml/trunk/projects/MY_NEW_PROJECT"
+      echo "svn checkout https://sami.cdt.int.thomsonreuters.com/svn/taml_taml/trunk/projects/MY_NEW_PROJECT"
+  }
 # }}}
 
 # maven {{{
   export M2_HOME=/home/arnold/tools/apache-maven-3.1.1
   export M2=$M2_HOME/bin
   PATH=$M2:$PATH
+  PATH=./:$PATH
   alias mvncheck='mvn versions:display-dependency-updates'
   alias depTree='mvn dependency:tree | g-'
   alias depTreeVerbose='mvn -Dverbose=true dependency:tree | g-'
   unittest() { mvn test -Dtest=$1 ; }
   unittestclean() { mvn clean test -Dtest=$1 ; }
 
-  alias mm='mvn install'
-  alias mmci='mvn clean install'
+  alias mm='mvn install -U'
+  alias mmci='mvn clean install findbugs:findbugs -U'
 
   alias runjava='java -cp target/*-jar-with-dependencies.jar'
 # }}}
@@ -125,4 +161,38 @@
   #eval `dircolors ~/.coloursrc`
 # }}}
 
+# ruby {{{
+ source /home/arnold/.rvm/scripts/rvm
+# }}}
+
+# review board {{{
+ alias postReview='rbt post --target-groups=taml'
+# }}}
+
+# personal aliases {{{
+  alias src='cd ~/svn'
+  alias ner='cd ~/svn/NamedEntityRecognition'
+  alias tss='cd ~/svn/TwitterSearchService'
+  source /home/arnold/bin/arnold_scripts.rc
+
+  # NOTES {{{
+    function n() {
+      if [ -z $1 ]
+      then
+        ll ~/notes
+      elif [ $1 == "edit" ]
+      then
+        gvim ~/notes/$2
+      else
+        cat ~/notes/$1
+      fi
+    }
+    alias notes='n'
+  # }}}
+# }}}
+
+
+
 #vim:foldmethod=marker 
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
