@@ -35,14 +35,15 @@
   # no limit to how long of history to keep
   unset HISTFILESIZE
   export HISTTIMEFORMAT="%Y-%m-%d %H:%M "
+  bind 'set match-hidden-files off'
 # }}}
 
 # env settings{{{
   PATH=$PATH
-  PATH=/home/arnold/tools/jdk1.7.0_45/bin:$PATH
-  PATH=/home/arnold/tools/node-v0.10.23/:$PATH
-  PATH=/home/arnold/bin:$PATH
-  JAVA_HOME=/home/arnold/tools/jdk1.7.0_45/
+  #PATH=/home/arnold/tools/jdk1.7.0_45/bin:$PATH
+  #PATH=/home/arnold/tools/node-v0.10.23/:$PATH
+  #PATH=/home/arnold/bin:$PATH
+  #JAVA_HOME=/home/arnold/tools/jdk1.7.0_45/
   
   export EDITOR='gvim -f'
   export VISUAL='gvim -f'
@@ -88,14 +89,6 @@
   alias lastlog='ls -tr ~/logs | tail -n5; g ~/logs/`ls -tr ~/logs | tail -n1`'
 # }}}
 
-# git-svn commands
-  function show_gitsvn() {
-      echo "to clone  : git svn clone https://sami.cdt.int.thomsonreuters.com/svn/taml_taml/trunk/projects/SOME_PROJECT"
-      echo "(with rev): git svn clone -s -r 40000:HEAD https://sami.cdt.int.thomsonreuters.com/svn/taml_taml/trunk/projects/SOME_PROJECT"
-      echo "to update : git svn rebase"
-      echo "to commit : git svn dcommit"
-  }
-
 # git {{{
   alias gits='git status'
   alias gitrevdiff='git log -p -M -C --follow'
@@ -108,29 +101,6 @@
   git config --global color.diff auto
   git config --global color.interactive auto
   git config --global color.status auto
-# }}}
-
-# svn {{{
-  svn() {
-    if [ x"$1" = xdiff ] || [ x"$1" = xdi ]; then
-      /usr/bin/svn "$@" | less
-    elif [ x"$1" = xlog ] ; then
-      /usr/bin/svn "$@" | less
-    else
-      /usr/bin/svn "$@"
-    fi
-  }
-  alias svnstatus='svn status'
-  alias svns='svn status'
-  alias s='svns'
-  alias sdiff='svn diff | less'
-  function svnrevdiff() {
-      svn log --diff $@ | less
-  }
-  function show_svn() {
-      echo "svn import . https://sami.cdt.int.thomsonreuters.com/svn/taml_taml/trunk/projects/MY_NEW_PROJECT"
-      echo "svn checkout https://sami.cdt.int.thomsonreuters.com/svn/taml_taml/trunk/projects/MY_NEW_PROJECT"
-  }
 # }}}
 
 # maven {{{
@@ -162,7 +132,7 @@
 # }}}
 
 # ruby {{{
- source /home/arnold/.rvm/scripts/rvm
+ #source /home/arnold/.rvm/scripts/rvm
 # }}}
 
 # review board {{{
@@ -170,11 +140,6 @@
 # }}}
 
 # personal aliases {{{
-  alias src='cd ~/svn'
-  alias ner='cd ~/svn/NamedEntityRecognition'
-  alias tss='cd ~/svn/TwitterSearchService'
-  source /home/arnold/bin/arnold_scripts.rc
-
   # NOTES {{{
     function n() {
       if [ -z $1 ]
@@ -195,4 +160,4 @@
 
 #vim:foldmethod=marker 
 
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+# PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
