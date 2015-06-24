@@ -1,3 +1,23 @@
 
-To fix resolution problems
-sudo apt-get install virtualbox-ose-guest-utils virtualbox-ose-guest-x11 virtualbox-ose-guest-dkms
+* Disable caps lock
+* Install Gvim
+* Install Terminator
+* Install Netbeans / vim plugin
+
+.bashrc
+   cd ~
+   mv .bashrc .bashrc.orig
+   ln -s .arnold/jung_environment/bashrc .bashrc
+
+vim
+  mkdir ~/.vimbak
+  ln -s .arnold/vim/vimrc .vimrc
+
+
+Guest Additions
+  #  sudo apt-get update
+  #  sudo apt-get upgrade
+  #  sudo apt-get install build-essential module-assistant
+  #  sudo m-a prepare
+  then install CD
+
