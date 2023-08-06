@@ -23,29 +23,20 @@ set vb
 
 set nowrap
 
-set guifont=Courier\ 10\ Pitch
-
-colorscheme darkblue
+"colorscheme darkblue
 "colorscheme ron
 "colorscheme oceandeep
 "colorscheme moria
 "colorscheme northsky
-"colorscheme desert
+colorscheme desert
 "colorscheme pablo
-
-" for prettier indentions
-set showbreak=\ \ \ \ \ \ \|\
 
 "   highlight search
 set hlsearch
 
 " == Functional Options ==========================
-map H ^
-map L $
-inoremap kj <Esc>
 
 " No highlight macro
-:map ,c :nohls<cr>
 :map ,d :cd %:h<cr>
 
 :map <C-k> :bp<cr>
@@ -83,10 +74,6 @@ au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") |exe "normal g'\
 
 :set autoread
 :set linebreak
-
-" folding
-:map <F5> v%zf<cr>
-:set foldmethod=marker foldmarker={{{,}}}
 
 " Use Vim defaults and not plain 'ol vi
 set nocompatible
@@ -126,18 +113,4 @@ func! FileWithLineNumber()
   exec num
   endif
 endfunc
-
-" move a line of text using ALT+[jk], indent with ALT+[hl]
-nnoremap <A-j> :m+<CR>==
-nnoremap <A-k> :m-2<CR>==
-nnoremap <A-h> <<
-nnoremap <A-l> >>
-inoremap <A-j> <Esc>:m+<CR>==gi
-inoremap <A-k> <Esc>:m-2<CR>==gi
-inoremap <A-h> <Esc><<`]a
-inoremap <A-l> <Esc>>>`]a
-vnoremap <A-j> :m'>+<CR>gv=gv
-vnoremap <A-k> :m-2<CR>gv=gv
-vnoremap <A-h> <gv
-vnoremap <A-l> >gv
 

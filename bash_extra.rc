@@ -1,0 +1,67 @@
+# source /path/to/this/file in .bashrc
+
+###############
+# bash settings
+###############
+stty -ctlecho
+shopt -s checkwinsize
+shopt -s histappend
+shopt -s extglob
+shopt -u dotglob
+shopt -s cdspell
+export IGNOREEOF=1
+HISTCONTROL=ignoredups
+# no limit to how long of history to keep
+unset HISTFILESIZE
+export HISTTIMEFORMAT="%Y-%m-%d %H:%M "
+bind 'set match-hidden-files off'
+
+export EDITOR='gvim -f'
+export VISUAL='gvim -f'
+export PAGER='less'
+
+#########
+# Aliases
+#########
+alias bashrc='echo "sourcing .bashrc" && source ~/.bashrc'
+alias cd-='cd -'
+alias shistory='history | tail -n50'
+alias lspwd='find `pwd` -maxdepth 1 | sort'
+alias dush='du -sh '
+alias f='find . -name'
+alias ltr='ll -ltr'
+alias cp='cp -i'
+alias rm='rm -i'
+alias mv='mv -i'
+alias ll='ls -l --color=auto'
+alias llh='ll -h'
+alias lsdir='ls -L1p | grep /'
+alias psme='ps U arnold'
+alias psall='ps axf'
+alias pwd='pwd -P'
+alias tree='tree -C --dirsfirst'
+alias lastcol="awk '{print \$NF;}'"
+alias less='less --force -R --ignore-case --long-prompt'
+
+alias gits='git status'
+alias iotop='iotop -d 3 -oa'
+alias g='gvim'
+alias g-='g -'
+alias gdiff='gvimdiff'
+alias ungzip='gunzip'
+alias k-='kompare -'
+alias msg='kdialog --msgbox'
+alias wnbdeluxe='javaws http://www.fatbread.com/yawni.jnlp'
+alias treemap='gdmap'
+
+
+########
+# PROMPT
+########
+SET_PROMPT_COLOR='\[\033[0;36m\]'
+SET_PROMPT_COLOR2='\[\033[0;32m\]'
+END_PROMPT_COLOR='\[\e[0m\]'
+PS1="$SET_PROMPT_COLOR[\w] \t$END_PROMPT_COLOR"
+PS1="\n$PS1\n$SET_PROMPT_COLOR2[\W]$ $END_PROMPT_COLOR"
+#(with host) PS1="\n$PS1\n$SET_PROMPT_COLOR2[\W@\h]$ $END_PROMPT_COLOR"
+
